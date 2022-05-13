@@ -12,6 +12,12 @@
 (global-set-key (kbd "M-'") "@")
 (global-set-key (kbd "M-i") "|")
 
+;; User Interface
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(add-to-list 'default-frame-alist '(height . 43))
+(add-to-list 'default-frame-alist '(width . 132))
+
 ;; Custom keyboard bindings
 
 ;; Alternative to "C-x #" to keep editing tempo

@@ -1,3 +1,8 @@
-/auto-save-list/
+# Excluded directories
+/.gen/
 /elpa/
+
+# Temporary files
 *~
+\#*#
+.#*

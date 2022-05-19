@@ -36,7 +36,7 @@
  '(custom-enabled-themes '(nord))
  '(custom-safe-themes
    '("197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1" default))
- '(package-selected-packages '(yaml-mode nord-theme)))
+ '(package-selected-packages '(lua-mode yaml-mode nord-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

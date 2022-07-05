@@ -1,6 +1,8 @@
 # Excluded directories
 /.gen/
 /elpa/
+/transient/
+/url/
 
 # Temporary files
 *~

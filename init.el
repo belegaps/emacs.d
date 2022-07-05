@@ -19,7 +19,11 @@
 (add-to-list 'default-frame-alist '(height . 43))
 (add-to-list 'default-frame-alist '(width . 132))
 
+;; Projectile
+(projectile-mode +1)
+
 ;; Custom keyboard bindings
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 
 ;; Alternative to "C-x #" to keep editing tempo
 (global-set-key (kbd "C-x C-3") 'server-edit)

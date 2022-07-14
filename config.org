@@ -121,3 +121,23 @@ the function, one that doesn't require changing from Ctrl to Shift:
 ;; Alternative to "C-x #" to keep editing tempo
 (global-set-key (kbd "C-x C-3") 'server-edit)
 #+end_src
+
+# Client/server Mode
+
+Of course, configuring CLI tools to use ~emacsclient~ requires that
+the Emacs application starts a server (creates a server socket).  The
+following function call does exactly that:
+
+#+begin_src emacs-lisp
+  (server-start)
+#+end_src
+
+Along with configuring ~Emacs.app~ to launch at login, this ensures
+that the editor is always available.
+
+** TODO Consider adding options (-a, -n) to ~$EDITOR~
+
+Adding the '-a <app>' option to ~$EDITOR~ would tell it to start a
+different program if ~Emacs.app~ isn't running.  And, adding '-n'
+would cause ~Emacs.app~ to open a new frame for the editor.  (I'm not
+entirely sold on that idea though.)

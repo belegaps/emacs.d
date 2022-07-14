@@ -4,15 +4,6 @@
   "config.org"
   user-emacs-directory))
 
-;; Mac OS X Danish Keyboard Bindings
-(global-set-key (kbd "M-(") "{")
-(global-set-key (kbd "M-)") "}")
-(global-set-key (kbd "M-8") "[")
-(global-set-key (kbd "M-9") "]")
-(global-set-key (kbd "M-'") "@")
-(global-set-key (kbd "M-i") "|")
-(global-set-key (kbd "M-/") "\\")
-
 ;; User Interface
 (tool-bar-mode -1)
 (scroll-bar-mode -1)

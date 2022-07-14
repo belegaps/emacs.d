@@ -42,9 +42,30 @@ The Emacs package system needs at least one repository from which to
 install packages.  The following code adds both ~melpa~ and
 ~melpa-stable~ to the list and initialize the package system.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp -n
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 #+end_src
+
+* MacOS Danish Keyboard Bindings
+
+Emacs performs low-level keyboard interaction, which is good (who
+needs to enter '∂', '∆', or '¬' characters anyway), but there are a
+collection of keyboard combinations that I'm used to and cannot do
+without.
+
+The following snippet sets the mappings that I absolutely needs, when
+doing programming:
+
+#+begin_src emacs-lisp +n 1
+(global-set-key (kbd "M-(") "{")
+(global-set-key (kbd "M-)") "}")
+(global-set-key (kbd "M-8") "[")
+(global-set-key (kbd "M-9") "]")
+(global-set-key (kbd "M-'") "@")
+(global-set-key (kbd "M-i") "|")
+(global-set-key (kbd "M-/") "\\")
+#+end_src
+

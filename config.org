@@ -69,3 +69,55 @@ doing programming:
 (global-set-key (kbd "M-/") "\\")
 #+end_src
 
+* User Interface
+
+A couple of things different from the stock configuration.  First,
+remove the toolbar and scroll bar.  Maybe I'm just too used to the
+ViM experience.  Anyway, it takes away window real estate.
+
+#+begin_src emacs-lisp
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+end_src
+
+Next, set the default frame size, when starting up.  This is just
+based on my default terminal window size and should probably change in
+the future, as I always resize the frame anyway--and position it
+somewhere specifically.
+
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(height . 43))
+(add-to-list 'default-frame-alist '(width . 132))
+#+end_src
+
+# $EDITOR
+
+I have configured Emacs as my default editor for command line tools,
+like ~git~, using the ~$EDITOR~ environment variable, in ~.zshrc~:
+
+#+begin_src shell-script
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='emacsclient'
+fi
+#+end_src
+
+When logging into the machine over SSH, it uses ~ViM~, but for local
+connections, the ~emacsclient~.
+
+The way that works is that, for instance, ~git~ executes ~emacsclient~
+with the name of a file containing the commit message for editing and
+once that's done, I have to execute the ~server-edit~ function in
+Emacs to notify the client that editing is done.
+
+By default, that function is bound to ~C+x #~, which on a danish
+keyboard requires pressing ~C-x S-3~.  /That/ sequence does not
+preserve tempo, so the following snippet adds a second sequence for
+the function, one that doesn't require changing from Ctrl to Shift:
+
+#+begin_src emacs-lisp
+;; Alternative to "C-x #" to keep editing tempo
+(global-set-key (kbd "C-x C-3") 'server-edit)
+#+end_src

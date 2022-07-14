@@ -4,15 +4,6 @@
   "config.org"
   user-emacs-directory))
 
-;; User Interface
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(add-to-list 'default-frame-alist '(height . 43))
-(add-to-list 'default-frame-alist '(width . 132))
-
-;; Alternative to "C-x #" to keep editing tempo
-(global-set-key (kbd "C-x C-3") 'server-edit)
-
 ;; Start server
 (server-start)
 

@@ -43,10 +43,10 @@ install packages.  The following code adds both ~melpa~ and
 ~melpa-stable~ to the list and initialize the package system.
 
 #+begin_src emacs-lisp -n
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
+  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (package-initialize)
 #+end_src
 
 * MacOS Danish Keyboard Bindings
@@ -60,13 +60,13 @@ The following snippet sets the mappings that I absolutely needs, when
 doing programming:
 
 #+begin_src emacs-lisp +n 1
-(global-set-key (kbd "M-(") "{")
-(global-set-key (kbd "M-)") "}")
-(global-set-key (kbd "M-8") "[")
-(global-set-key (kbd "M-9") "]")
-(global-set-key (kbd "M-'") "@")
-(global-set-key (kbd "M-i") "|")
-(global-set-key (kbd "M-/") "\\")
+  (global-set-key (kbd "M-(") "{")
+  (global-set-key (kbd "M-)") "}")
+  (global-set-key (kbd "M-8") "[")
+  (global-set-key (kbd "M-9") "]")
+  (global-set-key (kbd "M-'") "@")
+  (global-set-key (kbd "M-i") "|")
+  (global-set-key (kbd "M-/") "\\")
 #+end_src
 
 * User Interface
@@ -76,8 +76,8 @@ remove the toolbar and scroll bar.  Maybe I'm just too used to the
 ViM experience.  Anyway, it takes away window real estate.
 
 #+begin_src emacs-lisp
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
 #+end_src
 
 Next, set the default frame size, when starting up.  This is just
@@ -86,8 +86,8 @@ the future, as I always resize the frame anyway--and position it
 somewhere specifically.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(height . 43))
-(add-to-list 'default-frame-alist '(width . 132))
+  (add-to-list 'default-frame-alist '(height . 43))
+  (add-to-list 'default-frame-alist '(width . 132))
 #+end_src
 
 # $EDITOR
@@ -118,8 +118,8 @@ preserve tempo, so the following snippet adds a second sequence for
 the function, one that doesn't require changing from Ctrl to Shift:
 
 #+begin_src emacs-lisp
-;; Alternative to "C-x #" to keep editing tempo
-(global-set-key (kbd "C-x C-3") 'server-edit)
+  ;; Alternative to "C-x #" to keep editing tempo
+  (global-set-key (kbd "C-x C-3") 'server-edit)
 #+end_src
 
 # Client/server Mode
@@ -141,3 +141,33 @@ Adding the '-a <app>' option to ~$EDITOR~ would tell it to start a
 different program if ~Emacs.app~ isn't running.  And, adding '-n'
 would cause ~Emacs.app~ to open a new frame for the editor.  (I'm not
 entirely sold on that idea though.)
+
+* Projectile
+
+The projectile package adds features for working with "projects", for
+instance project management and navigation.
+
+First, the package writes its project cache directly in the
+~user-emacs-directory~, which is annoying, as it's not included in the
+~git~ repository.  Of course, the file could be added to the
+~.gitignore~ file, but I've already added the
+~transient~ sub-directory, so I might as well put the project cache in there:
+
+#+begin_src emacs-lisp
+  (setq
+   projectile-known-projects-file
+   (expand-file-name "transient/projectile-bookmarks.eld" user-emacs-directory))
+#+end_src
+
+After that, the ~projectile~ mode can be enabled:
+
+#+begin_src emacs-lisp
+  (projectile-mode +1)
+#+end_src
+
+And, for good measure, add a custom keyboard prefix, ⌘+p.  (I don't
+expect to be printing directly from Emacs anyway.  But who knows?)
+
+#+begin_src emacs-lisp
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+#+end_src

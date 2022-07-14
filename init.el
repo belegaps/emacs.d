@@ -1,8 +1,8 @@
-;; Configure package manager
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
+;; Load configuration from ~/.emacs.d/config.org
+(org-babel-load-file
+ (expand-file-name
+  "config.org"
+  user-emacs-directory))
 
 ;; Mac OS X Danish Keyboard Bindings
 (global-set-key (kbd "M-(") "{")

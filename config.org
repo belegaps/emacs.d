@@ -1,0 +1,50 @@
+#+TITLE: My Emacs Configuration
+#+AUTHOR: Per Salomonsen (belegaps)
+
+* About This Config
+
+This is my personal Emacs configuration.  I'm beginning to discover
+Emacs from scratch, so I'm expecting this configuration to evolve over
+the coming months and years.
+
+I was suggested installing the Doom Emacs distribution and did so at
+first, but reverted to a scratch install in order to be more in line
+with the basic tutorials (and because I'm the prototypical
+yak-shaver), but at some point I might go back to a distribution.  Who
+knows?
+
+I picked up the idea of using a ~.org~ file for the main Emacs
+configuration from Derek Taylor ([[https://www.youtube.com/c/DistroTube][DistroTube on YouTube]]), which seems
+like a good idea.  I was already curious about the concept of literal
+programming from Haskell, so this fit like a glove.
+
+* Enabling This Configuration File
+
+The only thing needed in ~init.el~ is the following statement to
+extract the source code snippets from this file and execute them:
+
+#+begin_example
+(org-babel-load-file
+ (expand-file-name
+  "config.org"
+  user-emacs-directory))
+#+end_example
+
+Beware, though, that initialization will fail if /this/ file doesn't
+contain at least one ~#+begin_src~ section.  This is because the
+~org-babel-tangle~ function won't generate an ~.el~ file if there are
+no source code sections in this file and, subsequent, the ~load-file~
+function will fail because it cannot find the file.
+
+* Configure Package Repositories
+
+The Emacs package system needs at least one repository from which to
+install packages.  The following code adds both ~melpa~ and
+~melpa-stable~ to the list and initialize the package system.
+
+#+begin_src emacs-lisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+#+end_src

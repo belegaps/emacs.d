@@ -171,3 +171,29 @@ expect to be printing directly from Emacs anyway.  But who knows?)
 #+begin_src emacs-lisp
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 #+end_src
+
+* Bug References
+
+The ~bug-reference-mode~ generates an overlay in the editor, when the
+file contains references to issues.  For now, it is enabled on
+~org-mode~ using:
+
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'bug-reference-mode)
+#+end_src
+
+In order to configure it, we need to set the
+~bug-reference-bug-regexp~ and ~bug-reference-url-format~ variables.
+One is a regular expression to recognise issue tokens, the other is
+the format for generating the URL of the link.
+
+But with different trackers used in different projects, I'll configure
+those variables as per-directory local variables.  Since we're using
+JIRA at work, I'll put a ~.dir-locals.el~ file at the base of the
+directory used for work and configure the variables in there:
+
+#+begin_example
+  ((org-mode . (
+     (bug-reference-bug-regexp . "\\b\\(\\([A-Za-z][A-Za-z0-9]\\{1,10\\}-[0-9]+\\)\\)")
+     (bug-reference-url-format . "https://<jira-server>/browse/%s"))))
+#+end_example

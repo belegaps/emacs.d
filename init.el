@@ -13,7 +13,8 @@
  '(custom-enabled-themes '(nord))
  '(custom-safe-themes
    '("197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1" default))
- '(package-selected-packages '(projectile magit go-mode lua-mode yaml-mode nord-theme)))
+ '(package-selected-packages
+   '(typescript-mode projectile magit go-mode lua-mode yaml-mode nord-theme)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

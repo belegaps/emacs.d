@@ -14,7 +14,8 @@
  '(custom-safe-themes
    '("197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1" default))
  '(package-selected-packages
-   '(typescript-mode projectile magit go-mode lua-mode yaml-mode nord-theme)))
+   '(typescript-mode projectile magit go-mode lua-mode yaml-mode nord-theme))
+ '(safe-local-variable-values '((user-mail-address . "psalomonsen@belega.dk"))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

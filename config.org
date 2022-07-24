@@ -49,6 +49,16 @@ install packages.  The following code adds both ~melpa~ and
   (package-initialize)
 #+end_src
 
+* ~use-package~
+
+~use-package~ seems to be the thing to use.
+
+#+begin_src emacs-lisp
+  ;; Enable use-package when loading
+  (eval-when-compile
+    (require 'use-package))
+#+end_src
+
 * MacOS Danish Keyboard Bindings
 
 Emacs performs low-level keyboard interaction, which is good (who
@@ -147,30 +157,28 @@ entirely sold on that idea though.)
 The projectile package adds features for working with "projects", for
 instance project management and navigation.
 
-First, the package writes its project cache directly in the
-~user-emacs-directory~, which is annoying, as it's not included in the
-~git~ repository.  Of course, the file could be added to the
-~.gitignore~ file, but I've already added the
-~transient~ sub-directory, so I might as well put the project cache in there:
-
 #+begin_src emacs-lisp
-  (setq
-   projectile-known-projects-file
-   (expand-file-name "transient/projectile-bookmarks.eld" user-emacs-directory))
+  (use-package projectile
+    :init
+    (setq
+     projectile-known-projects-file
+     (expand-file-name "transient/projectile-bookmarks.eld" user-emacs-directory))
+    :config
+    (projectile-mode +1)
+    :bind-keymap
+    (("s-p" . projectile-command-map)))
 #+end_src
 
-After that, the ~projectile~ mode can be enabled:
+The ~:init~ section sets the ~projectile-known-projects-file~ to a
+file in the ~.emacs.d/transient~ directory, because that directory
+already is listed in ~.gitignore~ and I don't want the known projects
+list in version control (it's probably only relevant per computer
+anyway).
 
-#+begin_src emacs-lisp
-  (projectile-mode +1)
-#+end_src
-
-And, for good measure, add a custom keyboard prefix, ⌘+p.  (I don't
-expect to be printing directly from Emacs anyway.  But who knows?)
-
-#+begin_src emacs-lisp
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-#+end_src
+Next, after loading the plugin, the ~:config~ section enables it
+globally and ~:bind-keymap~ adds a custom keyboard prefix, ⌘+p, for
+the ~projectile~ key-map.  (I don't expect to be printing directly
+from Emacs anyway.  But who knows?)
 
 * Bug References
 

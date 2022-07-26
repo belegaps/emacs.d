@@ -120,6 +120,21 @@ disable those:
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
 
+** n00b Help
+
+Use the ~which-key~ package to display list of possible keys following
+a prefix key:
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init
+    (which-key-mode)
+    :diminish
+    which-key-mode
+    :config
+    (setq which-key-idle-delay 0.3))
+#+end_src
+
 * $EDITOR
 
 I have configured Emacs as my default editor for command line tools,

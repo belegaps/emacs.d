@@ -44,8 +44,10 @@ install packages.  The following code adds both ~melpa~ and
 
 #+begin_src emacs-lisp -n
   (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
-  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (add-to-list 'package-archives
+	       '("melpa" . "https://melpa.org/packages") t)
+  (add-to-list 'package-archives
+	       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
   (package-initialize)
 #+end_src
 
@@ -58,6 +60,16 @@ install packages.  The following code adds both ~melpa~ and
   (eval-when-compile
     (require 'use-package))
 #+end_src
+
+Configure ~use-package~ to always download the package when first
+used:
+
+#+begin_src emacs-lisp
+  (setq use-package-always-ensure t)
+#+end_src
+
+This relieves us from adding ~:ensure t~ to all ~use-package~
+statements.
 
 * MacOS Danish Keyboard Bindings
 

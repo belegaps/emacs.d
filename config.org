@@ -100,7 +100,27 @@ somewhere specifically.
   (add-to-list 'default-frame-alist '(width . 132))
 #+end_src
 
-# $EDITOR
+** Line numbers
+
+Show column number in status line and enable in-buffer line numbers
+globally:
+
+#+begin_src emacs-lisp
+  (column-number-mode)
+  (global-display-line-numbers-mode t)
+#+end_src
+
+In some buffers, though, it's a little weird with line numbers, so
+disable those:
+
+#+begin_src emacs-lisp
+  (dolist (mode '(eshell-mode-hook
+		  org-mode-hook
+		  term-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+#+end_src
+
+* $EDITOR
 
 I have configured Emacs as my default editor for command line tools,
 like ~git~, using the ~$EDITOR~ environment variable, in ~.zshrc~:

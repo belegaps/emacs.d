@@ -14,9 +14,9 @@ yak-shaver), but at some point I might go back to a distribution.  Who
 knows?
 
 I picked up the idea of using a ~.org~ file for the main Emacs
-configuration from Derek Taylor ([[https://www.youtube.com/c/DistroTube][DistroTube on YouTube]]), which seems
-like a good idea.  I was already curious about the concept of literal
-programming from Haskell, so this fit like a glove.
+configuration from Derek Taylor[fn:1], which seems like a good idea.
+I was already curious about the concept of literal programming from
+Haskell, so this fit like a glove.
 
 * Enabling This Configuration File
 
@@ -51,7 +51,7 @@ install packages.  The following code adds both ~melpa~ and
   (package-initialize)
 #+end_src
 
-* ~use-package~
+** ~use-package~
 
 ~use-package~ seems to be the thing to use.
 
@@ -70,26 +70,6 @@ used:
 
 This relieves us from adding ~:ensure t~ to all ~use-package~
 statements.
-
-* MacOS Danish Keyboard Bindings
-
-Emacs performs low-level keyboard interaction, which is good (who
-needs to enter '∂', '∆', or '¬' characters anyway), but there are a
-collection of keyboard combinations that I'm used to and cannot do
-without.
-
-The following snippet sets the mappings that I absolutely needs, when
-doing programming:
-
-#+begin_src emacs-lisp +n 1
-  (global-set-key (kbd "M-(") "{")
-  (global-set-key (kbd "M-)") "}")
-  (global-set-key (kbd "M-8") "[")
-  (global-set-key (kbd "M-9") "]")
-  (global-set-key (kbd "M-'") "@")
-  (global-set-key (kbd "M-i") "|")
-  (global-set-key (kbd "M-/") "\\")
-#+end_src
 
 * User Interface
 
@@ -110,6 +90,56 @@ somewhere specifically.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(height . 43))
   (add-to-list 'default-frame-alist '(width . 132))
+#+end_src
+
+** MacOS Danish Keyboard Bindings
+
+Emacs performs low-level keyboard interaction, which is good (who
+needs to enter '∂', '∆', or '¬' characters anyway), but there are a
+collection of keyboard combinations that I'm used to and cannot do
+without.
+
+The following snippet sets the mappings that I absolutely needs, when
+doing programming:
+
+#+begin_src emacs-lisp +n 1
+  (global-set-key (kbd "M-(") "{")
+  (global-set-key (kbd "M-)") "}")
+  (global-set-key (kbd "M-8") "[")
+  (global-set-key (kbd "M-9") "]")
+  (global-set-key (kbd "M-'") "@")
+  (global-set-key (kbd "M-i") "|")
+  (global-set-key (kbd "M-/") "\\")
+#+end_src
+
+** Theme
+
+I favor the "nord" theme across all my applications, whenever
+possible.  Allow the theme to be loaded.  The hash value(s) listed are
+the SHA256 digest of the theme files (~nord-theme.el~ for instance).
+~default~ is a marker for the default themes distributed with emacs.
+
+#+begin_src emacs-lisp
+  (setq custom-safe-themes
+	'("197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1"
+	  default))
+#+end_src
+
+It is necessary to recalculate the hash value(s) when updating the
+themes to new versions.
+
+Load the theme with confirmation disabled (for now):
+
+#+begin_src emacs-lisp
+  (load-theme 'nord)
+  (enable-theme 'nord)
+#+end_src
+
+Then increase the default font size to let the old folks read it as
+well:
+
+#+begin_src emacs-lisp
+  (custom-theme-set-faces 'user '(default ((t (:height 150)))))
 #+end_src
 
 ** Line numbers
@@ -252,3 +282,78 @@ directory used for work and configure the variables in there:
      (bug-reference-bug-regexp . "\\b\\(\\([A-Za-z][A-Za-z0-9]\\{1,10\\}-[0-9]+\\)\\)")
      (bug-reference-url-format . "https://<jira-server>/browse/%s"))))
 #+end_example
+
+* Org Mode
+
+Configuring ~org-mode~ improves readability (in Emacs) of .org files.
+The initial setup is inspired by Diego Zamboni's article on beatifying
+Org mode[fn:2].
+
+** Markup
+
+First, hide emphasis markers for /italic/, *bold*, =verbatim=, ~code~, and
+_underlined_ text (and, "if you must"[fn:3], +strike-through+).
+
+#+begin_src emacs-lisp
+  (setq org-hide-emphasis-markers t)
+#+end_src
+
+** Lists
+
+Next, change the display of list bullets to a centered dot:
+
+#+begin_src emacs-lisp
+  (font-lock-add-keywords 'org-mode
+			'(("^ *\\([-]\\) " (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+I don't know if this works with nested lists or if nested lists are
+supported.
+
+** Headers
+
+Add (better) bullets for headers:
+
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+And set the font (and size) of headers:
+
+#+begin_src emacs-lisp
+  (let* ((variable-tuple
+	(cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
+	      ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+	      ((x-list-fonts "PT Sans")         '(:font "PT Sans"))
+	      ((x-list-fonts "Verdana")         '(:font "Verdana"))
+	      ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+	      (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+       (base-font-color     (face-foreground 'default nil 'default))
+       (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+  (custom-theme-set-faces
+   'user
+   `(org-level-8 ((t (,@headline ,@variable-tuple))))
+   `(org-level-7 ((t (,@headline ,@variable-tuple))))
+   `(org-level-6 ((t (,@headline ,@variable-tuple))))
+   `(org-level-5 ((t (,@headline ,@variable-tuple))))
+   `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
+   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
+   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
+   `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+#+end_src
+
+* Footnotes
+
+[fn:1] Derek Taylor runs the [[https://www.youtube.com/c/DistroTube][DistroTube]] channel on YouTube.  His
+configuration can be found on [[https://gitlab.com/dwt1/dotfiles][GitLab]].
+
+[fn:2] Diego Zamboni runs the website [[https://zzamboni.org][zamboni.org]] and the initial
+configurations for my own Org mode are taken from the article
+[[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Beautifying Org Mode in Emacs]].
+
+[fn:3]  The quote is from [[https://orgmode.org/org.html#Emphasis-and-Monospace][The Org manual]], where not much love is lost
+for strikethrough.

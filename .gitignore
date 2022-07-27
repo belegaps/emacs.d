@@ -8,5 +8,7 @@
 *~
 \#*#
 .#*
-projectile-bookmarks.eld
+/projectile-bookmarks.eld
+/projects
 config.el
+config.html

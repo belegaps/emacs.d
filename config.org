@@ -92,6 +92,15 @@ somewhere specifically.
   (add-to-list 'default-frame-alist '(width . 132))
 #+end_src
 
+** Customization
+
+Move the customization variables to a separate file.
+
+#+begin_src emacs-lisp
+  (setq custom-file (expand-file-name "emacs-custom.el" user-emacs-directory))
+  (load custom-file)
+#+end_src
+
 ** MacOS Danish Keyboard Bindings
 
 Emacs performs low-level keyboard interaction, which is good (who

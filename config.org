@@ -269,6 +269,21 @@ private projects.
 
 And, finally, it turns on ~projectile-mode~.
 
+** File Finding
+
+To help functionality in ~projectile~ I installed the ~ripgrep~ and ~fd~ tools.
+
+#+begin_src shell
+  $ brew install ripgrep fd
+#+end_src
+
+And add the ~projectile-ripgrep~ package to enable the
+~projectile-ripgrep~ command.
+
+#+begin_src emacs-lisp
+  (use-package projectile-ripgrep)
+#+end_src
+
 * Bug References
 
 The ~bug-reference-mode~ generates an overlay in the editor, when the

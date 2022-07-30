@@ -36,6 +36,37 @@ contain at least one ~#+begin_src~ section.  This is because the
 no source code sections in this file and, subsequent, the ~load-file~
 function will fail because it cannot find the file.
 
+* Initial Config
+
+Set up the ~exec-path~ to ensure that Homebrew paths and the user ~bin~
+directory are included so Emacs can execute local applications even
+when Emacs is launched from the GUI.
+
+#+begin_src emacs-lisp
+  (defvar brew-prefix "/opt/homebrew"
+    "The path prefix for applications installed by Homebrew")
+  (defvar brew-paths '("bin"
+		       "opt/gnu-sed/libexec/gnubin"
+		       "opt/coreutils/libexec/gnubin")
+    "The Homebrew paths to include in EXEC-PATH")
+
+  (let* ((user-bin-path (expand-file-name "bin" (getenv "HOME")))
+	 (paths (cons user-bin-path
+		      (mapcar (lambda (p) (expand-file-name p brew-prefix))
+			      brew-paths))))
+    (dolist (path paths)
+      (add-to-list 'exec-path path))
+    (setenv "PATH" (mapconcat 'identity exec-path ":")))
+#+end_src
+
+The code defines two variables: ~brew-prefix~, which is the prefix path
+for Homebrew installed applications, and ~brew-paths~, which are the
+Homebrew sub-paths that contains command line tools.
+
+Next, the code updates ~exec-path~ to include any of the custom
+directories that are not alrady there and re-sets the "PATH"
+environment variable from that.
+
 * Configure Package Repositories
 
 The Emacs package system needs at least one repository from which to

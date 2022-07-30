@@ -238,7 +238,9 @@ different program if ~Emacs.app~ isn't running.  And, adding '-n'
 would cause ~Emacs.app~ to open a new frame for the editor.  (I'm not
 entirely sold on that idea though.)
 
-* Projectile
+* Projects
+
+** Projectile
 
 The projectile package adds features for working with "projects", for
 instance project management and navigation.
@@ -246,13 +248,14 @@ instance project management and navigation.
 #+begin_src emacs-lisp
   (use-package projectile
     :init
-    (setq
-     projectile-known-projects-file
-     (expand-file-name "transient/projectile-bookmarks.eld" user-emacs-directory))
-    :config
+    (setq projectile-known-projects-file
+	  (expand-file-name "transient/projectile-bookmarks.eld" user-emacs-directory))
+    (setq projectile-project-search-path
+	  '(("~/work/Projects" . 2) "~/Private/Projects" "~/Private/Scratches" "~/.emacs.d"))
     (projectile-mode +1)
-    :bind-keymap
-    (("s-p" . projectile-command-map)))
+    :bind (:map projectile-mode-map
+		("s-p" . projectile-command-map)
+		("C-c p" . projectile-command-map)))
 #+end_src
 
 The ~:init~ section sets the ~projectile-known-projects-file~ to a
@@ -261,10 +264,10 @@ already is listed in ~.gitignore~ and I don't want the known projects
 list in version control (it's probably only relevant per computer
 anyway).
 
-Next, after loading the plugin, the ~:config~ section enables it
-globally and ~:bind-keymap~ adds a custom keyboard prefix, ⌘+p, for
-the ~projectile~ key-map.  (I don't expect to be printing directly
-from Emacs anyway.  But who knows?)
+It also defines the search path for projects to include both work and
+private projects.
+
+And, finally, it turns on ~projectile-mode~.
 
 * Bug References
 

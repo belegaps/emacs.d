@@ -217,6 +217,24 @@ a prefix key:
     (setq which-key-idle-delay 0.3))
 #+end_src
 
+* Counsel, Ivy, and Swiper
+
+Installing ~counsel~ will pull in ~ivy~ and ~swiper~ as well.
+
+#+begin_src emacs-lisp
+  (use-package counsel
+    :config
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    (ivy-mode 1)
+    :bind (("C-s" . swiper-isearch)
+	   ("M-x" . counsel-M-x)
+	   ("C-x C-f" . counsel-find-file)
+	   ("M-y" . counsel-yank-pop)
+	   ("C-c v" . ivy-push-view)
+	   ("C-c V" . ivy-pop-view)))
+#+end_src
+
 * $EDITOR
 
 I have configured Emacs as my default editor for command line tools,

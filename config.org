@@ -318,6 +318,25 @@ private projects.
 
 And, finally, it turns on ~projectile-mode~.
 
+** Recent Files
+
+Projectile includes a key binding (~M-p e~) for showing recent files,
+but it requires ~recentf-mode~ to be enabled, so let's do that:
+
+#+begin_src emacs-lisp
+  (use-package recentf
+    :init
+    (setq recentf-save-file
+	  (expand-file-name "transient/recentf" user-emacs-directory))
+    (recentf-mode +1)
+    :bind
+    ("s-e" . counsel-recentf))
+#+end_src
+
+This ensures ~recentf~ is loaded, configures the location of the recent
+files file, turns on ~recentf-mode~ and adds a Super-E (Cmd-E) key
+binding, which I'm used to from IDEs.
+
 ** File Finding
 
 To help functionality in ~projectile~ I installed the ~ripgrep~ and ~fd~ tools.

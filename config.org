@@ -441,6 +441,18 @@ And set the font (and size) of headers:
    `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
 #+end_src
 
+* Modes
+
+~feature-mode~ adds support for editing Cucumber/gherkin files.
+
+#+begin_src emacs-lisp
+  (use-package feature-mode
+    :init
+    (setq feature-default-language "fi")
+    :config
+    (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode)))
+#+end_src
+
 * Footnotes
 
 [fn:1] Derek Taylor runs the [[https://www.youtube.com/c/DistroTube][DistroTube]] channel on YouTube.  His

@@ -64,7 +64,7 @@ for Homebrew installed applications, and ~brew-paths~, which are the
 Homebrew sub-paths that contains command line tools.
 
 Next, the code updates ~exec-path~ to include any of the custom
-directories that are not alrady there and re-sets the "PATH"
+directories that are not already there and re-sets the "PATH"
 environment variable from that.
 
 * Configure Package Repositories

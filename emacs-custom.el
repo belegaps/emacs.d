@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(auto-save-list-file-prefix "~/.emacs.d/.gen/auto-save-list/.saves-")
  '(package-selected-packages
-   '(haskell-mode feature-mode projectile-ripgrep org-bullets go-mode lua-mode magit nord-theme typescript-mode use-package which-key yaml-mode))
+   '(editorconfig haskell-mode feature-mode projectile-ripgrep org-bullets go-mode lua-mode magit nord-theme typescript-mode use-package which-key yaml-mode))
  '(safe-local-variable-values '((user-mail-address . "psalomonsen@belega.dk"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

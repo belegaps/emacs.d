@@ -273,6 +273,15 @@ Using the =copilot.el= package to interact with GitHub Copilot.
   )
 #+end_src
 
+* Common Lisp
+
+#+begin_src emacs-lisp
+  (use-package slime
+    :config
+    (setq inferior-lisp-program "/opt/homebrew/bin/sbcl")
+    )
+#+end_src
+
 * $EDITOR
 
 I have configured Emacs as my default editor for command line tools,

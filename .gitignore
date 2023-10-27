@@ -4,6 +4,7 @@
 /transient/
 /url/
 /eshell/
+/straight/
 
 # Temporary files
 *~
@@ -11,5 +12,6 @@
 .#*
 /projectile-bookmarks.eld
 /projects
+/tutorial/
 config.el
 config.html

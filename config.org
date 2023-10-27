@@ -102,6 +102,26 @@ used:
 This relieves us from adding ~:ensure t~ to all ~use-package~
 statements.
 
+** straight.el
+
+=straight.el= is an alternative to the built in package installer that
+claims to be modern and functional.
+
+#+begin_src emacs-lisp
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	(bootstrap-version 6))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	   "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+#+end_src
+
 * User Interface
 
 A couple of things different from the stock configuration.  First,
@@ -233,6 +253,24 @@ Installing ~counsel~ will pull in ~ivy~ and ~swiper~ as well.
 	   ("M-y" . counsel-yank-pop)
 	   ("C-c v" . ivy-push-view)
 	   ("C-c V" . ivy-pop-view)))
+#+end_src
+
+* Github Copilot
+
+Using the =copilot.el= package to interact with GitHub Copilot.
+
+#+begin_src emacs-lisp
+  (use-package copilot
+    :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+    :ensure t
+    :hook (prog-mode . copilot-mode)
+    :bind (:map copilot-completion-map
+	      ("<tab>" . copilot-accept-completion)
+	      ("TAB" . copilot-accept-completion)
+	      ("M-p" . copilot-previous-completion)
+	      ("M-n" . copilot-next-completion)
+	  )
+  )
 #+end_src
 
 * $EDITOR

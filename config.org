@@ -43,20 +43,25 @@ directory are included so Emacs can execute local applications even
 when Emacs is launched from the GUI.
 
 #+begin_src emacs-lisp
-  (defvar brew-prefix "/opt/homebrew"
-    "The path prefix for applications installed by Homebrew")
-  (defvar brew-paths '("bin"
-		       "opt/gnu-sed/libexec/gnubin"
-		       "opt/coreutils/libexec/gnubin")
-    "The Homebrew paths to include in EXEC-PATH")
+    (defvar brew-prefix "/opt/homebrew"
+      "The path prefix for applications installed by Homebrew")
+    (defvar brew-paths '("bin"
+    		       "opt/gnu-sed/libexec/gnubin"
+    		       "opt/gnu-getopt/bin"
+    		       "opt/coreutils/libexec/gnubin")
+      "The Homebrew paths to include in EXEC-PATH")
 
-  (let* ((user-bin-path (expand-file-name "bin" (getenv "HOME")))
-	 (paths (cons user-bin-path
-		      (mapcar (lambda (p) (expand-file-name p brew-prefix))
-			      brew-paths))))
-    (dolist (path paths)
-      (add-to-list 'exec-path path))
-    (setenv "PATH" (mapconcat 'identity exec-path ":")))
+    (let* (
+         (user-home (getenv "HOME"))
+         (user-bin-path (expand-file-name "bin" user-home))
+         (user-local-bin-path (expand-file-name ".local/bin" user-home))
+         (paths
+              (cons user-bin-path
+  		  (cons user-local-bin-path
+    		          (mapcar (lambda (p) (expand-file-name p brew-prefix)) brew-paths)))))
+      (dolist (path paths)
+        (add-to-list 'exec-path path))
+      (setenv "PATH" (mapconcat 'identity exec-path ":")))
 #+end_src
 
 The code defines two variables: ~brew-prefix~, which is the prefix path
@@ -261,16 +266,14 @@ Using the =copilot.el= package to interact with GitHub Copilot.
 
 #+begin_src emacs-lisp
   (use-package copilot
-    :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
-    :ensure t
+    :vc (:url "https://github.com/copilot-emacs/copilot.el"
+              :rev :newest
+              :branch "main")
     :hook (prog-mode . copilot-mode)
     :bind (:map copilot-completion-map
-	      ("<tab>" . copilot-accept-completion)
-	      ("TAB" . copilot-accept-completion)
-	      ("M-p" . copilot-previous-completion)
-	      ("M-n" . copilot-next-completion)
-	  )
-  )
+  	      ("<tab>" . copilot-accept-completion)
+  	      ("TAB" . copilot-accept-completion)
+  	      ("M-p" . copilot-previous-completion)))
 #+end_src
 
 * Common Lisp
@@ -388,9 +391,9 @@ binding, which I'm used to from IDEs.
 
 To help functionality in ~projectile~ I installed the ~ripgrep~ and ~fd~ tools.
 
-#+begin_src shell
+#+begin_example shell
   $ brew install ripgrep fd
-#+end_src
+#+end_example
 
 And add the ~projectile-ripgrep~ package to enable the
 ~projectile-ripgrep~ command.

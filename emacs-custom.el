@@ -5,7 +5,12 @@
  ;; If there is more than one, they won't work right.
  '(auto-save-list-file-prefix "~/.emacs.d/.gen/auto-save-list/.saves-")
  '(package-selected-packages
-   '(editorconfig haskell-mode feature-mode projectile-ripgrep org-bullets go-mode lua-mode magit nord-theme typescript-mode use-package which-key yaml-mode))
+   '(editorconfig haskell-mode feature-mode projectile-ripgrep
+		  org-bullets go-mode lua-mode magit nord-theme
+		  typescript-mode use-package which-key yaml-mode))
+ '(package-vc-selected-packages
+   '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
+	      "main")))
  '(safe-local-variable-values '((user-mail-address . "psalomonsen@belega.dk"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

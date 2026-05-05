@@ -503,6 +503,14 @@ And set the font (and size) of headers:
     (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode)))
 #+end_src
 
+** ~ledger~ Mode
+
+Adds a mode for editing ~ledger~'s (and ~hledger~'s) journal files:
+
+#+begin_src emacs-lisp
+  (use-package ledger-mode)
+#+end_src
+
 * Footnotes
 
 [fn:1] Derek Taylor runs the [[https://www.youtube.com/c/DistroTube][DistroTube]] channel on YouTube.  His

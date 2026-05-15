@@ -81,10 +81,12 @@ install packages.  The following code adds both ~melpa~ and
 #+begin_src emacs-lisp -n
   (require 'package)
   (add-to-list 'package-archives
-	       '("melpa" . "https://melpa.org/packages") t)
+	       '("melpa" . "https://melpa.org/packages/") t)
   (add-to-list 'package-archives
 	       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
   (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
 #+end_src
 
 ** ~use-package~
@@ -336,6 +338,18 @@ Adding the '-a <app>' option to ~$EDITOR~ would tell it to start a
 different program if ~Emacs.app~ isn't running.  And, adding '-n'
 would cause ~Emacs.app~ to open a new frame for the editor.  (I'm not
 entirely sold on that idea though.)
+
+* Magit
+
+~magit~ is an Emacs interface to Git.  Installing it also enables
+~git-rebase-mode~ and ~git-commit-mode~, which provide syntax
+highlighting and keybindings when Git invokes ~emacsclient~ for
+interactive rebase or commit message editing.
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :pin melpa)
+#+end_src
 
 * Projects
 

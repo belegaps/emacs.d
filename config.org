@@ -262,22 +262,6 @@ Installing ~counsel~ will pull in ~ivy~ and ~swiper~ as well.
 	   ("C-c V" . ivy-pop-view)))
 #+end_src
 
-* Github Copilot
-
-Using the =copilot.el= package to interact with GitHub Copilot.
-
-#+begin_src emacs-lisp
-  (use-package copilot
-    :vc (:url "https://github.com/copilot-emacs/copilot.el"
-              :rev :newest
-              :branch "main")
-    :hook (prog-mode . copilot-mode)
-    :bind (:map copilot-completion-map
-  	      ("<tab>" . copilot-accept-completion)
-  	      ("TAB" . copilot-accept-completion)
-  	      ("M-p" . copilot-previous-completion)))
-#+end_src
-
 * Common Lisp
 
 #+begin_src emacs-lisp
